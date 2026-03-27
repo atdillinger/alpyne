@@ -1,0 +1,10 @@
+[project]
+name = "alpyne"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "boto3>=1.42.77",
+    "pyyaml>=6.0.3",
+    "requests>=2.33.0",
+    "twilio>=9.10.4",
+]

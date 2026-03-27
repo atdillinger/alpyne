@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+uvx ruff check
+if [[ $? == 0 ]]; then
+    printf "Good Commit\n"
+else
+    printf "Lint Issues! Please resolve before commiting.\n"
+    printf "commit-msg hook failed (add --no-verify to bypass)\n"
+    exit 1
+fi

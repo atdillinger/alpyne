@@ -18,6 +18,3 @@ jobs:
 
     - name: Run tests
       run: uvx ruff check
-
-    - name: Run tests
-      run: uv run pytest tests

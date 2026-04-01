@@ -12,6 +12,9 @@ members = [
 name = "alpyne"
 version = "0.1.0"
 source = { virtual = "." }
+dependencies = [
+    { name = "pygments" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -19,6 +22,7 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "pygments", specifier = ">=2.20.0" }]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=9.0.2" }]
@@ -62,21 +66,21 @@ wheels = [
 
 [[package]]
 name = "aws-cdk-cloud-assembly-schema"
-version = "52.2.0"
+version = "53.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsii" },
     { name = "publication" },
     { name = "typeguard" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/81/b3/baf6ba1d34bc4fc8affb7849613978df80b6e97b5d48a885dbc84adf1a97/aws_cdk_cloud_assembly_schema-52.2.0.tar.gz", hash = "sha256:737309e2c7c7e4b46bd669cb9fe8799a36424c9a174523b54833cf1cd12b5e3f", size = 210466, upload-time = "2026-02-23T17:08:48.404Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/10/89/df73506a9384fbbb78605a4666db7d15b839c42dd0352acfbce0877bc176/aws_cdk_cloud_assembly_schema-53.11.0.tar.gz", hash = "sha256:af7954ffe6ba62b74593db7166e995688497efd7ffec10b51003a595fe164fa9", size = 210906, upload-time = "2026-03-31T11:41:50.891Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0e/b3/2305e64194634b3c1f0bff38462dd59e617dc1460ac8df1616a5b193d2fe/aws_cdk_cloud_assembly_schema-52.2.0-py3-none-any.whl", hash = "sha256:87b918589f7d627f45e330726f592ec0b39056e1403558f3a1ba8a2134dacd6f", size = 210184, upload-time = "2026-02-23T17:08:46.923Z" },
+    { url = "https://files.pythonhosted.org/packages/6a/f6/56869153e1da8a1c68501cf2aa649c857046cf0602aea32b4f4d5cdeb929/aws_cdk_cloud_assembly_schema-53.11.0-py3-none-any.whl", hash = "sha256:26a4587f74d401cc8ab020934ff92f19af35ef466ff78cd0fd76b895ddf200c6", size = 210665, upload-time = "2026-03-31T11:41:49.42Z" },
 ]
 
 [[package]]
 name = "aws-cdk-lib"
-version = "2.244.0"
+version = "2.246.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aws-cdk-asset-awscli-v1" },
@@ -87,9 +91,9 @@ dependencies = [
     { name = "publication" },
     { name = "typeguard" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/59/26/e8cde3e0aa4d475612f3c6f5bb4c7f8680321b030b70b4b1e4d264743d24/aws_cdk_lib-2.244.0.tar.gz", hash = "sha256:c39ba2fe54b47fae301c0b4d291ab3f7ce8e2254bec8428723dfdee9bac9beac", size = 48398419, upload-time = "2026-03-19T17:22:35.933Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ea/a2/1873ebe215d9f2012cfbbe8a7dc38e9f3b60df4f17aa7141017ad582d29f/aws_cdk_lib-2.246.0.tar.gz", hash = "sha256:6dc473fce44e1a0fd9ee0dbb9e53f0917bfbfb4823e151c6971bd49b970466d1", size = 48585271, upload-time = "2026-03-31T12:47:29.132Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1d/b9/ee73238ed52afdb110b30862b9730d227222a04f47b1f906d58b0b892909/aws_cdk_lib-2.244.0-py3-none-any.whl", hash = "sha256:81d28367acae7c998dbce619e266bc572e5ade69f13fcc5520d5dc4055ce65ac", size = 49049186, upload-time = "2026-03-19T17:21:52.963Z" },
+    { url = "https://files.pythonhosted.org/packages/e7/21/2ef27901cd691b8ca9929e6fe760cae5d0824170ec63fe1f26224a89b5d5/aws_cdk_lib-2.246.0-py3-none-any.whl", hash = "sha256:90c9ce4e7f0ae476445aa9bfd90ac60ac9ef48c173b4b8abcd58cbfb80f990e1", size = 49245400, upload-time = "2026-03-31T12:46:49.701Z" },
 ]
 
 [[package]]
@@ -208,11 +212,11 @@ wheels = [
 
 [[package]]
 name = "pygments"
-version = "2.19.2"
+version = "2.20.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b0/77/a5b8c569bf593b0140bde72ea885a803b82086995367bf2037de0159d924/pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887", size = 4968631, upload-time = "2025-06-21T13:39:12.283Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c3/b2/bc9c9196916376152d655522fdcebac55e66de6603a76a02bca1b6414f6c/pygments-2.20.0.tar.gz", hash = "sha256:6757cd03768053ff99f3039c1a36d6c0aa0b263438fcab17520b30a303a82b5f", size = 4955991, upload-time = "2026-03-29T13:29:33.898Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b", size = 1225217, upload-time = "2025-06-21T13:39:07.939Z" },
+    { url = "https://files.pythonhosted.org/packages/f4/7e/a72dd26f3b0f4f2bf1dd8923c85f7ceb43172af56d63c7383eb62b332364/pygments-2.20.0-py3-none-any.whl", hash = "sha256:81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176", size = 1231151, upload-time = "2026-03-29T13:29:30.038Z" },
 ]
 
 [[package]]

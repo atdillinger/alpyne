@@ -2,7 +2,9 @@
 name = "alpyne"
 version = "0.1.0"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "pygments>=2.20.0",
+]
 
 [tool.uv.workspace]
 members = [

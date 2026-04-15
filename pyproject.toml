@@ -5,6 +5,7 @@ requires-python = ">=3.14"
 dependencies = [
     "aiohttp>=3.13.5",
     "pygments>=2.20.0",
+    "pytest>=9.0.3",
 ]
 
 [tool.uv.workspace]

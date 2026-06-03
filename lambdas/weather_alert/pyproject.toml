@@ -3,7 +3,7 @@ name = "alpyne"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
-    "aiohttp>=3.13.5",
+    "aiohttp>=3.14.0",
     "boto3>=1.42.77",
     "pyyaml>=6.0.3",
     "requests>=2.33.0",

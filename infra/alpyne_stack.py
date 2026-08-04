@@ -12,7 +12,7 @@ class AlpyneStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        ab_path = pathlib.Path().resolve()
+        ab_path = pathlib.Path().cwd()
 
         build_path = "./build/alpyne/python"
         req = "./lambdas/alpyne/requirements.txt"

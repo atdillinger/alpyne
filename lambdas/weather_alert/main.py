@@ -2,7 +2,7 @@
 import json
 import logging
 import os
-from datetime import datetime
+from datetime import UTC, datetime
 from textwrap import dedent
 from xmlrpc.client import boolean
 
@@ -77,7 +77,7 @@ def get_forecast() -> list:
         raw_data = get_working_dataset(latitude, longitude)
         dataset[crag] = {}
         for x in raw_data["daily"]:
-            day_of_the_week = datetime.fromtimestamp(x["dt"]).strftime("%A")
+            day_of_the_week = datetime.fromtimestamp(x["dt"], UTC).strftime("%A")
             dataset[crag][day_of_the_week] = {
                 "weather": x["weather"][0]["description"],
                 "high": x["temp"]["max"],

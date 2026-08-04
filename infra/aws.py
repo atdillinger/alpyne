@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from alpyne_stack import AlpyneStack
 from aws_cdk import App
 

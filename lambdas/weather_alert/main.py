@@ -37,7 +37,11 @@ def get_working_dataset(latitude: float, longitude: float) -> dict:
         api_key = os.environ["openweather_api_key"]
         logger.debug("Using OS Env Var")
     except KeyError:
-        api_key = get_secret(secret_container="openweather", region_name="us-east-1", secret_key="api_secret")
+        api_key = get_secret(
+            secret_container="openweather",
+            region_name="us-east-1",
+            secret_key="api_secret",
+        )
         logger.debug("Using secretsmanager")
 
     excluded_dataset = "current,minutely,hourly,alerts"
@@ -74,7 +78,10 @@ def get_forecast() -> list:
         dataset[crag] = {}
         for x in raw_data["daily"]:
             day_of_the_week = datetime.fromtimestamp(x["dt"]).strftime("%A")
-            dataset[crag][day_of_the_week] = {"weather": x["weather"][0]["description"], "high": x["temp"]["max"]}
+            dataset[crag][day_of_the_week] = {
+                "weather": x["weather"][0]["description"],
+                "high": x["temp"]["max"],
+            }
 
     return dataset
 
@@ -108,33 +115,43 @@ def send_sms_message(message: list) -> boolean:
         account_sid = os.environ["TWILIO_ACCOUNT_SID"]
         logger.debug("Using OS Env Var")
     except KeyError:
-        account_sid = get_secret(secret_container="twilio", region_name="us-east-1", secret_key="account_sid")
+        account_sid = get_secret(
+            secret_container="twilio", region_name="us-east-1", secret_key="account_sid"
+        )
         logger.debug("using secretsmanager")
 
     try:
         auth_token = os.environ["TWILIO_AUTH_TOKEN"]
         logger.debug("Using OS Env Var")
     except KeyError:
-        auth_token = get_secret(secret_container="twilio", region_name="us-east-1", secret_key="auth_token")
+        auth_token = get_secret(
+            secret_container="twilio", region_name="us-east-1", secret_key="auth_token"
+        )
         logger.debug("using secretsmanager")
 
     try:
         from_number = os.environ["TWILIO_FROM_NUMBER"]
         logger.debug("Using OS Env Var")
     except KeyError:
-        from_number = get_secret(secret_container="twilio", region_name="us-east-1", secret_key="from_number")
+        from_number = get_secret(
+            secret_container="twilio", region_name="us-east-1", secret_key="from_number"
+        )
         logger.debug("using secretsmanager")
 
     try:
         to_number = os.environ["TWILIO_TO_NUMBER"]
         logger.debug("Using OS Env Var")
     except KeyError:
-        to_number = get_secret(secret_container="twilio", region_name="us-east-1", secret_key="to_number")
+        to_number = get_secret(
+            secret_container="twilio", region_name="us-east-1", secret_key="to_number"
+        )
         logger.debug("using secretsmanager")
 
     client = Client(account_sid, auth_token)
 
-    client.api.account.messages.create(to=to_number, from_=from_number, body=str(message))
+    client.api.account.messages.create(
+        to=to_number, from_=from_number, body=str(message)
+    )
 
     return True
 

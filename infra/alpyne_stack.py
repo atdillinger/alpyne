@@ -20,7 +20,9 @@ class AlpyneStack(Stack):
         if not os.path.isdir(f"{ab_path}/.build/alpyne/python"):
             subprocess.check_call(f"pip install -q -r {req} -t {build_path}".split())
 
-        layer = _lambda.LayerVersion(self, "alpyne-deps", code=_lambda.Code.from_asset("./build/alpyne"))
+        layer = _lambda.LayerVersion(
+            self, "alpyne-deps", code=_lambda.Code.from_asset("./build/alpyne")
+        )
 
         function = _lambda.Function(
             self,
@@ -33,8 +35,12 @@ class AlpyneStack(Stack):
             timeout=Duration.minutes(1),
         )
 
-        weather_api_secret = secretsmanager.Secret.from_secret_name_v2(self, "twilio", "twilio")
-        twilio_secrets = secretsmanager.Secret.from_secret_name_v2(self, "openweather", "openweather")
+        weather_api_secret = secretsmanager.Secret.from_secret_name_v2(
+            self, "twilio", "twilio"
+        )
+        twilio_secrets = secretsmanager.Secret.from_secret_name_v2(
+            self, "openweather", "openweather"
+        )
         weather_api_secret.grant_read(function)
         twilio_secrets.grant_read(function)
 

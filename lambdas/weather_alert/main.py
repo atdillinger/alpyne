@@ -2,7 +2,7 @@
 import json
 import logging
 import os
-from datetime import datetime
+from datetime import UTC, datetime
 from textwrap import dedent
 from xmlrpc.client import boolean
 
@@ -11,7 +11,7 @@ import requests
 import yaml
 from twilio.rest import Client
 
-logging.basicConfig(level=logging.INFO)
+logger = logging.basicConfig(level=logging.INFO)
 
 
 def get_secret(secret_container: str, region_name: str, secret_key: str) -> str:
@@ -35,10 +35,14 @@ def get_working_dataset(latitude: float, longitude: float) -> dict:
     """
     try:
         api_key = os.environ["openweather_api_key"]
-        logging.debug("Using OS Env Var")
+        logger.debug("Using OS Env Var")
     except KeyError:
-        api_key = get_secret(secret_container="openweather", region_name="us-east-1", secret_key="api_secret")
-        logging.debug("Using secretsmanager")
+        api_key = get_secret(
+            secret_container="openweather",
+            region_name="us-east-1",
+            secret_key="api_secret",
+        )
+        logger.debug("Using secretsmanager")
 
     excluded_dataset = "current,minutely,hourly,alerts"
     url = "https://api.openweathermap.org"
@@ -62,9 +66,7 @@ def get_forecast() -> list:
     with open("cords.yml", "r") as f:
         doc = yaml.load(f, Loader=yaml.FullLoader)
 
-    keys = []
-    for x in doc:
-        keys.append(x)
+    keys = [x for x in doc]
 
     dataset = {}
 
@@ -75,8 +77,11 @@ def get_forecast() -> list:
         raw_data = get_working_dataset(latitude, longitude)
         dataset[crag] = {}
         for x in raw_data["daily"]:
-            day_of_the_week = datetime.fromtimestamp(x["dt"]).strftime("%A")
-            dataset[crag][day_of_the_week] = {"weather": x["weather"][0]["description"], "high": x["temp"]["max"]}
+            day_of_the_week = datetime.fromtimestamp(x["dt"], UTC).strftime("%A")
+            dataset[crag][day_of_the_week] = {
+                "weather": x["weather"][0]["description"],
+                "high": x["temp"]["max"],
+            }
 
     return dataset
 
@@ -108,35 +113,45 @@ def create_sms_message(dataset: dict) -> str:
 def send_sms_message(message: list) -> boolean:
     try:
         account_sid = os.environ["TWILIO_ACCOUNT_SID"]
-        logging.debug("Using OS Env Var")
+        logger.debug("Using OS Env Var")
     except KeyError:
-        account_sid = get_secret(secret_container="twilio", region_name="us-east-1", secret_key="account_sid")
-        logging.debug("using secretsmanager")
+        account_sid = get_secret(
+            secret_container="twilio", region_name="us-east-1", secret_key="account_sid"
+        )
+        logger.debug("using secretsmanager")
 
     try:
         auth_token = os.environ["TWILIO_AUTH_TOKEN"]
-        logging.debug("Using OS Env Var")
+        logger.debug("Using OS Env Var")
     except KeyError:
-        auth_token = get_secret(secret_container="twilio", region_name="us-east-1", secret_key="auth_token")
-        logging.debug("using secretsmanager")
+        auth_token = get_secret(
+            secret_container="twilio", region_name="us-east-1", secret_key="auth_token"
+        )
+        logger.debug("using secretsmanager")
 
     try:
         from_number = os.environ["TWILIO_FROM_NUMBER"]
-        logging.debug("Using OS Env Var")
+        logger.debug("Using OS Env Var")
     except KeyError:
-        from_number = get_secret(secret_container="twilio", region_name="us-east-1", secret_key="from_number")
-        logging.debug("using secretsmanager")
+        from_number = get_secret(
+            secret_container="twilio", region_name="us-east-1", secret_key="from_number"
+        )
+        logger.debug("using secretsmanager")
 
     try:
         to_number = os.environ["TWILIO_TO_NUMBER"]
-        logging.debug("Using OS Env Var")
+        logger.debug("Using OS Env Var")
     except KeyError:
-        to_number = get_secret(secret_container="twilio", region_name="us-east-1", secret_key="to_number")
-        logging.debug("using secretsmanager")
+        to_number = get_secret(
+            secret_container="twilio", region_name="us-east-1", secret_key="to_number"
+        )
+        logger.debug("using secretsmanager")
 
     client = Client(account_sid, auth_token)
 
-    client.api.account.messages.create(to=to_number, from_=from_number, body=str(message))
+    client.api.account.messages.create(
+        to=to_number, from_=from_number, body=str(message)
+    )
 
     return True
 
@@ -144,7 +159,7 @@ def send_sms_message(message: list) -> boolean:
 def handler(event, context):
     dataset = get_forecast()
     message = create_sms_message(dataset)
-    logging.debug(message)
+    logger.debug(message)
 
     status = send_sms_message(message)
 
@@ -153,7 +168,7 @@ def handler(event, context):
 
 if __name__ == "__main__":
     forecast_dataset = get_forecast()
-    logging.debug(forecast_dataset)
+    logger.debug(forecast_dataset)
     sms_message = create_sms_message(forecast_dataset)
-    logging.debug(sms_message)
+    logger.debug(sms_message)
     status = send_sms_message(sms_message)

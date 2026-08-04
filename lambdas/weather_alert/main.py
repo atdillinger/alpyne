@@ -62,9 +62,7 @@ def get_forecast() -> list:
     with open("cords.yml", "r") as f:
         doc = yaml.load(f, Loader=yaml.FullLoader)
 
-    keys = []
-    for x in doc:
-        keys.append(x)
+    keys = [x for x in doc]
 
     dataset = {}
 

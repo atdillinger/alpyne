@@ -11,7 +11,8 @@ import requests
 import yaml
 from twilio.rest import Client
 
-logger = logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 def get_secret(secret_container: str, region_name: str, secret_key: str) -> str:
